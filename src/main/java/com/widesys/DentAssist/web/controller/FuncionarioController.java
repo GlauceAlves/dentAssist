@@ -28,8 +28,8 @@ public class FuncionarioController {
     @GetMapping
     public ResponseEntity<Iterable<Funcionario>> listarFuncionarios() {
     	ResponseEntity<Iterable<Funcionario>> funcionariosResponse = funcionarioservice.listarFuncionarios();
-    	if (funcionariosResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
-    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    	if (funcionariosResponse.getStatusCode() == HttpStatus.NO_CONTENT) {
+    		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     	} else {
         Iterable<Funcionario> funcionarios = funcionariosResponse.getBody();
         return new ResponseEntity<>(funcionarios, HttpStatus.OK);
@@ -46,9 +46,7 @@ public class FuncionarioController {
     @PostMapping
     public ResponseEntity<String> registraFuncionario(@RequestBody Funcionario funcionario) {
         return funcionarioservice.registraFuncionario(funcionario);   
-//    	Funcionario funcionarioSalvo = funcionarioservice.registraFuncionario(funcionario);
-//    	return ResponseEntity.ok(funcionarioSalvo);
-    }
+    }    
 
 
 
@@ -83,4 +81,5 @@ public class FuncionarioController {
 //			return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
 //		}
 //	}
+    
 }

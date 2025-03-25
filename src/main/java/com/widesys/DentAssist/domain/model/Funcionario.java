@@ -29,9 +29,12 @@ public class Funcionario {
 
     private String cpf;  
     private String nome;  
+    private String telefoneMensagem;
+    private String chavePix;
+    private String email;  
     
     @ElementCollection
-    private List<String> telefones;  
+    private List<String> outrosTelefones;  
 
     @Embedded
     private EnderecoFuncionario endereco;  
