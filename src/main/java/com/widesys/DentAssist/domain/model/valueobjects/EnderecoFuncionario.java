@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class EnderecoFuncionario {
 
-	private Long id;
+	private Long idEndereco;
 	private TipoEndereco tipoEndereco;
 	private String cep;
 	private Integer numero;

@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,27 +36,22 @@ public class FuncionarioController {
     	}
     }	
 	
-//
-// 	@GetMapping("/{cpf}")
-//	public ResponseEntity<Funcionario> getFuncionarioByCpf(@PathVariable String cpfFuncionario) {
-//		Optional<Funcionario> funcionario = funcionarioRepository.findByCpfFuncionario(cpfFuncionario);
-//
-//		if (funcionario.isPresent()) {
-//			return new ResponseEntity<>(funcionario.get(), HttpStatus.OK);
-//		} else {
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		}
-//	}
-//
-//
-//	@PostMapping
-//	public ResponseEntity<Funcionario> createFuncionario(@RequestBody Funcionario funcionario) {
-//		Funcionario savedFuncionario = funcionarioRepository.save(funcionario);
-//		return new ResponseEntity<>(savedFuncionario, HttpStatus.CREATED);
-//	}
-//	
-//
-// 
+    @GetMapping("/{id}")
+    public ResponseEntity<Funcionario> pesquisaFuncionarioId(@PathVariable Long id) {
+        Funcionario funcionario = funcionarioservice.buscarFuncionarioPorId(id);
+        return ResponseEntity.ok(funcionario);
+    }
+
+    
+    @PostMapping
+    public ResponseEntity<String> registraFuncionario(@RequestBody Funcionario funcionario) {
+        return funcionarioservice.registraFuncionario(funcionario);   
+//    	Funcionario funcionarioSalvo = funcionarioservice.registraFuncionario(funcionario);
+//    	return ResponseEntity.ok(funcionarioSalvo);
+    }
+
+
+
 //	@PutMapping("/{id}")
 //	public ResponseEntity<Funcionario> updateFuncionario(@PathVariable Long id, @RequestBody Funcionario funcionario) {
 //		Optional<Funcionario> existingFuncionario = funcionarioRepository.findById(id);
