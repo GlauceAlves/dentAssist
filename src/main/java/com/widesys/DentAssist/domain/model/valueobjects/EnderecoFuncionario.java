@@ -9,8 +9,6 @@ import lombok.Data;
 @Data
 public class EnderecoFuncionario {
 
-	private Long idEndereco;
-	
 	@Enumerated(EnumType.STRING)
 	private TipoEndereco tipoEndereco;
 	private String cep;

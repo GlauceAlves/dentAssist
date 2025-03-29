@@ -15,6 +15,8 @@ import com.widesys.DentAssist.domain.repository.FuncaoFuncionarioRepository;
 import com.widesys.DentAssist.domain.repository.FuncionarioRepository;
 import com.widesys.DentAssist.web.controller.exception.NotFoundException;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class FuncionarioService {
 
@@ -57,11 +59,14 @@ public class FuncionarioService {
 			return verificaResponse;
 		}
 		
+//		TipoEndereco tipoEndereco = TipoEndereco.valueOf(funcionarioRequest.getTipoEndereco().toUpperCase());
+//        funcionario.setEndereco(tipoEndereco);
+        
 		funcionarioRepository.save(funcionario);
 		return new ResponseEntity<>("Funcionário registrado com sucesso", HttpStatus.CREATED);
 	}
 	
-
+	@Transactional
 	public ResponseEntity<String> validaFuncionario(Funcionario funcionario) {
 		if (funcionario.getCpf() == null || funcionario.getCpf().isEmpty()) {
 			return new ResponseEntity<>("CPF não pode ser vazio.", HttpStatus.BAD_REQUEST);
@@ -69,10 +74,10 @@ public class FuncionarioService {
 		if (funcionarioRepository.findByCpf(funcionario.getCpf()).isPresent()) {
 			return new ResponseEntity<>("CPF já cadastrado.", HttpStatus.CONFLICT);
 		}
-		if (funcionario.getFuncao() == null || funcionario.getFuncao().getIdFuncao() == null) {
+		if (funcionario.getIdFuncao() == null || funcionario.getIdFuncao().getIdFuncao() == null) {
 			return new ResponseEntity<>("Função não pode ser vazio.", HttpStatus.BAD_REQUEST);
 		}
-		if (!funcaoFuncionarioRepository.findById(funcionario.getFuncao().getIdFuncao()).isPresent()) {
+		if (!funcaoFuncionarioRepository.findById(funcionario.getIdFuncao().getIdFuncao()).isPresent()) {
 			return new ResponseEntity<>("Função não registrada.", HttpStatus.BAD_REQUEST);
 		}
 		if (funcionario.getEspecialidadesOdonto() == null

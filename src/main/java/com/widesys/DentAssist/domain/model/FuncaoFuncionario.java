@@ -13,19 +13,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class FuncaoFuncionario {
 	@Id 
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long idFuncao;
 	private String descricao;
 	
-	@OneToMany(mappedBy="funcao")
+	@OneToMany(mappedBy="idFuncao")
 	private List<Funcionario> funcionarios;
-	
+
 
 	
 

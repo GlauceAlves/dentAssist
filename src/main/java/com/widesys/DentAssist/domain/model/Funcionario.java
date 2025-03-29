@@ -4,9 +4,12 @@ import java.util.List;
 
 import com.widesys.DentAssist.domain.model.valueobjects.EnderecoFuncionario;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,15 +36,17 @@ public class Funcionario {
     private String chavePix;
     private String email;  
     
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "funcionario_telefones", joinColumns = @JoinColumn(name = "funcionario_id"))
+    @Column(name = "telefone_mensagem")
     private List<String> outrosTelefones;  
 
     @Embedded
     private EnderecoFuncionario endereco;  
 
     @ManyToOne
-    @JoinColumn(name = "idFuncao", insertable = false, updatable = false)
-    private FuncaoFuncionario funcao;  
+    @JoinColumn(name = "idFuncao")
+    private FuncaoFuncionario idFuncao;  
 
     @ManyToMany
     @JoinTable(
@@ -49,5 +54,6 @@ public class Funcionario {
         joinColumns = @JoinColumn(name = "idFuncionario"),
         inverseJoinColumns = @JoinColumn(name = "idEspecialidade")
     )
+//    @JsonIgnore 
     private List<EspecialidadeOdonto> especialidadesOdonto;   
 }

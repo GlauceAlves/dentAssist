@@ -2,6 +2,8 @@ package com.widesys.DentAssist.domain.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,5 +35,6 @@ public class EspecialidadeOdonto {
 	private List<ProcedimentoOdonto> procedimentosOdonto;
 	
 	@ManyToMany(mappedBy = "especialidadesOdonto")
+	@JsonBackReference
 	private List<Funcionario> funcionarios;
 }
