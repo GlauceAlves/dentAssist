@@ -1,6 +1,7 @@
 package com.widesys.DentAssist.application.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.widesys.DentAssist.domain.model.EspecialidadeOdonto;
 import com.widesys.DentAssist.domain.model.Funcionario;
+import com.widesys.DentAssist.domain.model.util.ValidadorCpf;
+import com.widesys.DentAssist.domain.model.util.ValidadorTipoEndereco;
+import com.widesys.DentAssist.domain.model.valueobjects.TipoEndereco;
 import com.widesys.DentAssist.domain.repository.EspecialidadeOdontoRepository;
 import com.widesys.DentAssist.domain.repository.FuncaoFuncionarioRepository;
 import com.widesys.DentAssist.domain.repository.FuncionarioRepository;
@@ -47,7 +51,7 @@ public class FuncionarioService {
 				.orElseThrow(() -> new NotFoundException("Funcionário não encontrado com ID: " + id));
 	}
 
-	
+	@Transactional	
 	public ResponseEntity<String> registraFuncionario(Funcionario funcionario) {
 		ResponseEntity<String> validaResponse = validaFuncionario(funcionario);
 		if (validaResponse.getStatusCode() != HttpStatus.OK) {
@@ -58,22 +62,45 @@ public class FuncionarioService {
 		if (verificaResponse.getStatusCode() != HttpStatus.OK) {
 			return verificaResponse;
 		}
-		
-//		TipoEndereco tipoEndereco = TipoEndereco.valueOf(funcionarioRequest.getTipoEndereco().toUpperCase());
-//        funcionario.setEndereco(tipoEndereco);
-        
 		funcionarioRepository.save(funcionario);
 		return new ResponseEntity<>("Funcionário registrado com sucesso", HttpStatus.CREATED);
 	}
 	
+	@Transactional	
+	public ResponseEntity<String> atualizaFuncionario(Long id, Funcionario funcionario) {
+		return new ResponseEntity<>("Funcionário atualizado com sucesso", HttpStatus.CREATED);
+	}
+	
+	
 	@Transactional
+	public  ResponseEntity<String> deletaFuncionario(Long id) {
+		Optional<Funcionario> funcionariodeletado = funcionarioRepository.findById(id);
+		if(!funcionariodeletado.isPresent()) {
+			return new ResponseEntity<>("Funcionário id " + id + "não encontrado.", HttpStatus.BAD_REQUEST);
+		}
+		funcionarioRepository.deleteById(id);
+		return new ResponseEntity<>("Funcionário deletado com sucesso", HttpStatus.OK);
+	}
+ 
+	
+
 	public ResponseEntity<String> validaFuncionario(Funcionario funcionario) {
 		if (funcionario.getCpf() == null || funcionario.getCpf().isEmpty()) {
 			return new ResponseEntity<>("CPF não pode ser vazio.", HttpStatus.BAD_REQUEST);
 		}
+		
+        if (!ValidadorCpf.validarCpf(funcionario.getCpf())) {
+            return new ResponseEntity<>("CPF inválido.", HttpStatus.BAD_REQUEST);
+        }
+		
 		if (funcionarioRepository.findByCpf(funcionario.getCpf()).isPresent()) {
 			return new ResponseEntity<>("CPF já cadastrado.", HttpStatus.CONFLICT);
 		}
+		
+		if (!ValidadorTipoEndereco.isValidTipoEndereco(funcionario.getEndereco().getTipoEndereco().toString().toUpperCase())) {
+			return new ResponseEntity<>("Tipo de endereço inválido.", HttpStatus.BAD_REQUEST);
+	    }
+		
 		if (funcionario.getIdFuncao() == null || funcionario.getIdFuncao().getIdFuncao() == null) {
 			return new ResponseEntity<>("Função não pode ser vazio.", HttpStatus.BAD_REQUEST);
 		}
