@@ -61,38 +61,7 @@ public class FuncionarioController {
 		return funcionarioservice.deletaFuncionario(id);
 	}
 	
-	
 
-//	@PutMapping("/{id}")
-//	public ResponseEntity<Funcionario> updateFuncionario(@PathVariable Long id, @RequestBody Funcionario funcionario) {
-//		Optional<Funcionario> existingFuncionario = funcionarioRepository.findById(id);
-//
-//		if (existingFuncionario.isPresent()) {
-//			Funcionario updatedFuncionario = existingFuncionario.get();
-//			updatedFuncionario.setNomeFuncionario(funcionario.getNomeFuncionario());
-//			updatedFuncionario.setCpfFuncionario(funcionario.getCpfFuncionario());
-//			updatedFuncionario.setTelefones(funcionario.getTelefones());
-//			updatedFuncionario.setEnderecoFuncionario(funcionario.getEnderecoFuncionario());
-//			updatedFuncionario.setFuncaoFuncionario(funcionario.getFuncaoFuncionario());
-//			updatedFuncionario.setEspecialidadesOdonto(funcionario.getEspecialidadesOdonto());
-//			funcionarioRepository.save(updatedFuncionario);
-//			return new ResponseEntity<>(updatedFuncionario, HttpStatus.OK);
-//		} else {
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		}
-//	}
-//
-// 
-//	@DeleteMapping("/{id}")
-//	public ResponseEntity<Void> deleteFuncionario(@PathVariable Long id) {
-//		Optional<Funcionario> funcionario = funcionarioRepository.findById(id);
-//
-//		if (funcionario.isPresent()) {
-//			funcionarioRepository.deleteById(id);
-//			return new ResponseEntity<>(HttpStatus.NO_CONTENT);  
-//		} else {
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
-//		}
-//	}
+
 
 }

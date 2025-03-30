@@ -56,4 +56,6 @@ public class Funcionario {
     )
 //    @JsonIgnore 
     private List<EspecialidadeOdonto> especialidadesOdonto;   
+    
+
 }

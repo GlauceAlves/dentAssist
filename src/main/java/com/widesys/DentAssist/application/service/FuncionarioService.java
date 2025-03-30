@@ -66,11 +66,25 @@ public class FuncionarioService {
 		return new ResponseEntity<>("Funcionário registrado com sucesso", HttpStatus.CREATED);
 	}
 	
+
+
 	@Transactional	
 	public ResponseEntity<String> atualizaFuncionario(Long id, Funcionario funcionario) {
-		return new ResponseEntity<>("Funcionário atualizado com sucesso", HttpStatus.CREATED);
+		Optional<Funcionario> funcionarioExistente = funcionarioRepository.findById(id);
+		if (!funcionarioExistente.isPresent()) {
+			return new ResponseEntity<>("Funcionário não encontrado para atualização.", HttpStatus.NOT_FOUND);
+		}
+		Funcionario funcionarioAtualizado = funcionarioExistente.get();
+		funcionarioAtualizado.setChavePix(funcionario.getChavePix());
+		funcionarioAtualizado.setEmail(funcionario.getEmail());
+		funcionarioAtualizado.setEndereco(funcionario.getEndereco());
+		funcionarioAtualizado.setNome(funcionario.getNome());
+		funcionarioAtualizado.setTelefoneMensagem(funcionario.getTelefoneMensagem());
+		funcionarioAtualizado.setOutrosTelefones(funcionario.getOutrosTelefones());
+		funcionarioAtualizado.setEspecialidadesOdonto(funcionario.getEspecialidadesOdonto());
+		return new ResponseEntity<>("Funcionário atualizado com sucesso", HttpStatus.NO_CONTENT);
 	}
-	
+ 	
 	
 	@Transactional
 	public  ResponseEntity<String> deletaFuncionario(Long id) {
@@ -79,7 +93,7 @@ public class FuncionarioService {
 			return new ResponseEntity<>("Funcionário id " + id + "não encontrado.", HttpStatus.BAD_REQUEST);
 		}
 		funcionarioRepository.deleteById(id);
-		return new ResponseEntity<>("Funcionário deletado com sucesso", HttpStatus.OK);
+		return new ResponseEntity<>("Funcionário deletado com sucesso", HttpStatus.NO_CONTENT);
 	}
  
 	
