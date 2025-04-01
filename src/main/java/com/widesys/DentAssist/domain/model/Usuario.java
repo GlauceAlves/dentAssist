@@ -1,14 +1,11 @@
 package com.widesys.DentAssist.domain.model;
 
-import java.util.List;
-
-import javax.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,14 +14,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProcedimentoOdonto {
+public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idProcedimento;
+	private Long idUsuario;
+	private String namo;
+	private String email;
 	
-	@NotBlank(message = "A descrição não pode ser em branco.")
-	private String descricao;
-
-	@ManyToMany(mappedBy = "procedimentosOdonto")
-	private List<EspecialidadeOdonto> especialidadesOdonto;
+	@JsonIgnore
+	private String senha;
 }

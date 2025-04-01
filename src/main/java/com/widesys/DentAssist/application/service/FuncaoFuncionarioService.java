@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.widesys.DentAssist.domain.model.FuncaoFuncionario;
 import com.widesys.DentAssist.domain.repository.FuncaoFuncionarioRepository;
+import com.widesys.DentAssist.web.controller.exception.NotFoundException;
 
 @Service
 public class FuncaoFuncionarioService {
@@ -18,11 +19,15 @@ public class FuncaoFuncionarioService {
 	}
 
 	public ResponseEntity<Iterable<FuncaoFuncionario>> listarFuncoesFuncionario() {
-		Iterable<FuncaoFuncionario> listarFuncoesFuncionario = funcaofuncionarioRepository.findAll();
-		if(!listarFuncoesFuncionario.iterator().hasNext()) {
+		Iterable<FuncaoFuncionario> funcoesFuncionarioListada = funcaofuncionarioRepository.findAll();
+		if(!funcoesFuncionarioListada.iterator().hasNext()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(listarFuncoesFuncionario, HttpStatus.OK);
+		return new ResponseEntity<>(funcoesFuncionarioListada, HttpStatus.OK);
 	}
 
+	public FuncaoFuncionario buscarFuncaoFuncionarioId(Long id){
+		return funcaofuncionarioRepository.findById(id)
+				.orElseThrow(() -> new NotFoundException("Função não encontrado com ID: " + id));
+	}
 }

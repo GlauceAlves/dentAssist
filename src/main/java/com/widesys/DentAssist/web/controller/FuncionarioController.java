@@ -31,14 +31,8 @@ public class FuncionarioController {
 
 	@GetMapping
 	public ResponseEntity<Iterable<Funcionario>> listarFuncionarios() {
-		ResponseEntity<Iterable<Funcionario>> funcionariosResponse = funcionarioservice.listarFuncionarios();
-		if (funcionariosResponse.getStatusCode() == HttpStatus.NO_CONTENT) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		} else {
-			Iterable<Funcionario> funcionarios = funcionariosResponse.getBody();
-			return new ResponseEntity<>(funcionarios, HttpStatus.OK);
+			return funcionarioservice.listarFuncionarios();
 		}
-	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Funcionario> pesquisaFuncionarioId(@PathVariable Long id) {

@@ -13,7 +13,7 @@ import com.widesys.DentAssist.domain.model.EspecialidadeOdonto;
 import com.widesys.DentAssist.domain.model.Funcionario;
 import com.widesys.DentAssist.domain.model.util.ValidadorCpf;
 import com.widesys.DentAssist.domain.model.util.ValidadorTipoEndereco;
-import com.widesys.DentAssist.domain.model.valueobjects.TipoEndereco;
+import com.widesys.DentAssist.domain.model.valueobjects.TipoEnderecoEnum;
 import com.widesys.DentAssist.domain.repository.EspecialidadeOdontoRepository;
 import com.widesys.DentAssist.domain.repository.FuncaoFuncionarioRepository;
 import com.widesys.DentAssist.domain.repository.FuncionarioRepository;
@@ -82,7 +82,7 @@ public class FuncionarioService {
 		funcionarioAtualizado.setTelefoneMensagem(funcionario.getTelefoneMensagem());
 		funcionarioAtualizado.setOutrosTelefones(funcionario.getOutrosTelefones());
 		funcionarioAtualizado.setEspecialidadesOdonto(funcionario.getEspecialidadesOdonto());
-		return new ResponseEntity<>("Funcionário atualizado com sucesso", HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>("Funcionário atualizado com sucesso", HttpStatus.OK);
 	}
  	
 	
@@ -90,10 +90,10 @@ public class FuncionarioService {
 	public  ResponseEntity<String> deletaFuncionario(Long id) {
 		Optional<Funcionario> funcionariodeletado = funcionarioRepository.findById(id);
 		if(!funcionariodeletado.isPresent()) {
-			return new ResponseEntity<>("Funcionário id " + id + "não encontrado.", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Funcionário id " + id + " não encontrado.", HttpStatus.BAD_REQUEST);
 		}
 		funcionarioRepository.deleteById(id);
-		return new ResponseEntity<>("Funcionário deletado com sucesso", HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>("Funcionário deletado com sucesso", HttpStatus.OK);
 	}
  
 	

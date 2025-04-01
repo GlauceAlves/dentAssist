@@ -2,6 +2,7 @@
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.widesys.DentAssist.domain.model.valueobjects.EnderecoFuncionario;
 
 import jakarta.persistence.CollectionTable;
@@ -54,7 +55,8 @@ public class Funcionario {
         joinColumns = @JoinColumn(name = "idFuncionario"),
         inverseJoinColumns = @JoinColumn(name = "idEspecialidade")
     )
-//    @JsonIgnore 
+    
+ 
     private List<EspecialidadeOdonto> especialidadesOdonto;   
     
 

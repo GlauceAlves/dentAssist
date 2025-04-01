@@ -1,6 +1,6 @@
 package com.widesys.DentAssist.domain.model.valueobjects;
 
-public enum TipoEndereco {
+public enum TipoEnderecoEnum {
 	RESIDENCIAL,
     COMERCIAL,
     OUTROS
