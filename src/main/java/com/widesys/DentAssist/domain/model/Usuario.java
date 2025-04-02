@@ -18,7 +18,7 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idUsuario;
-	private String namo;
+	private String nome;
 	private String email;
 	
 	@JsonIgnore
